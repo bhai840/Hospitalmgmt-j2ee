@@ -68,6 +68,7 @@
             <version>1.0.0.Final</version>
         </dependency>  
   	<dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.noraui/ojdbc7 -->
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc7</artifactId>
             <version>12.1.0.2</version>
