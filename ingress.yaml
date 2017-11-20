@@ -1,22 +1,12 @@
-apiVersion: extensions/v1beta1
-kind: Ingress
+kind: Service
+apiVersion: v1
 metadata:
-  name: pipeline-hello-world
-  namespace: ${Kubernetes-NameSpace}     ## Kubernets namespace
-  labels:
-    app: pipeline-hello-world
-    service: pmtservice
-    env: nonprod
+  name: tomcat-web
 spec:
- # tls:
-  #  - hosts:
-   #     - pipeline-hello-world.Kubernetes-NameSpace.platform.r53.abcd.net
-    #  secretName: payments-dev-ingress-tls-certificate-nonprod
-  rules:
-    - host: pipeline-hello-world.Kubernetes-NameSpace.platform.r53.abcd.net
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: pipeline-hello-world
-              servicePort: 8080
+  selector:
+    app: tomcat-web
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
