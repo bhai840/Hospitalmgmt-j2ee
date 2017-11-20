@@ -1,14 +1,14 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: springboot
+  name: tomcat-web
   namespace:  default
   labels:
-    app: springboot
-    service: springboot    ###ServiceName
+    app: tomcat-web
+    service: tomcat-web    ###ServiceName
     env: nonprod
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -16,13 +16,13 @@ spec:
       maxUnavailable: 0
   template:
     metadata:
-      name: springboot
+      name: tomcat-web
       namespace: default     ## Kubernets namespace
       annotations:
         imagelabel: latest
       labels:
-        app: springboot
-        service: springboot
+        app: tomcat-web
+        service: tomcat-web
         env: nonprod
     spec:
       affinity:
@@ -35,12 +35,12 @@ spec:
                 topologyKey: failure-domain.beta.kubernetes.io/zone
                 labelSelector:
                   matchLabels:
-                    app: springboot
-                    service: springboot     # K8s ServiceName
+                    app: tomcat-web
+                    service: tomcat-web     # K8s ServiceName
                     env: nonprod
       containers:
         - envFrom:
-          image: docker.io/chennaraov/springboot:latest   #docker hub Docker Image repo link
+          image: docker.io/chennaraov/tomcat-web:latest   #docker hub Docker Image repo link
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:
@@ -49,7 +49,7 @@ spec:
             successThreshold: 1
             initialDelaySeconds: 15
             timeoutSeconds: 2
-          name: springboot
+          name: tomcat-web
           ports:
             - name: http
               containerPort: 8080
