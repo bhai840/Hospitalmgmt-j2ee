@@ -1,0 +1,55 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: springboot
+  namespace:  default
+  labels:
+    app: springboot
+    service: springboot    ###ServiceName
+    env: nonprod
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      name: springboot
+      namespace: default     ## Kubernets namespace
+      annotations:
+        imagelabel: latest
+      labels:
+        app: springboot
+        service: springboot
+        env: nonprod
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 5
+              podAffinityTerm:
+                namespaces:
+                  - default
+                topologyKey: failure-domain.beta.kubernetes.io/zone
+                labelSelector:
+                  matchLabels:
+                    app: springboot
+                    service: springboot     # K8s ServiceName
+                    env: nonprod
+      containers:
+        - envFrom:
+          image: docker.io/chennaraov/springboot:latest   #docker hub Docker Image repo link
+          imagePullPolicy: Always
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            failureThreshold: 3
+            successThreshold: 1
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+          name: springboot
+          ports:
+            - name: http
+              containerPort: 8080
