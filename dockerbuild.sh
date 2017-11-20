@@ -6,4 +6,4 @@ docker build -t tomcat-web .
 docker tag tomcat-web:latest $DOCKER_ID_USER/$DOCKER_IMAGE:latest
 docker login -u $DOCKER_ID_USER -p $DOCKER_PW
 docker push $DOCKER_ID_USER/$DOCKER_IMAGE:latest
-docker images -qa | xargs docker rmi -f
+#docker images -qa | xargs docker rmi -f
