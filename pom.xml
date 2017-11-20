@@ -68,12 +68,11 @@
             <version>1.0.0.Final</version>
         </dependency>  
   	<dependency>
-            <-- https://mvnrepository.com/artifact/com.github.noraui/ojdbc7 -->
+            <url>https://mvnrepository.com/artifact/com.github.noraui/ojdbc7</url>
             <groupId>com.github.noraui</groupId>
             <artifactId>ojdbc7</artifactId>
             <version>12.1.0.2</version>
         </dependency>
-
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
