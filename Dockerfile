@@ -1,4 +1,5 @@
-FROM java:8
+FROM tomcat:8.0.47-jre8
 EXPOSE 8080
-ADD /target/spring-boot-web-0.0.1-SNAPSHOT.jar demo.jar
-ENTRYPOINT ["java","-jar","demo.jar"]
+COPY ./target/*.war ${CATALINA_HOME}/webapps/
+#COPY ./server.xml ${CATALINA_HOME}/conf/server.xml
+CMD ["catalina.sh", "run"]
